@@ -38,7 +38,7 @@ you should now have your python3 environment ready for this exercise.
 
 In this Task we want to receive all tweets a specific user has ever made and want to store them in a csv file. The Profile of SATW_ch will be used for this task.
 
-### Step1 Receive all Tweets
+### Step 1: Receive all Tweets
 
 To get all the tweets, first some theory is necessary, which will be explained in the next steps.
 
@@ -138,4 +138,4 @@ def get_all_tweets(html):
   return tweets_dict
 ```
 
-### Step2 Create a CSV File
+### Step 2: Create a CSV File
