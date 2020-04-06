@@ -144,6 +144,8 @@ def get_all_tweets(html):
 Next, we want to write our Dictionary into a CSV File. A CVS file can be created with the "with" Keyword. This Example illustrates this:
 
 ```python
+import csv
+
  with open('tweets.csv', 'w') as csv_file:
         writer = csv.writer(csv_file)
 
