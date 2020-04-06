@@ -139,6 +139,8 @@ def get_all_tweets(html):
   return tweets_dict
 ```
 
+### Step 2: Create CSV File
+
 Next, we want to write our Dictionary into a CSV File. A CVS file can be created with the "with" Keyword. This Example illustrates this:
 
 ```python
@@ -160,3 +162,5 @@ Here is an example of an resulting Entry:
 This 2 Documentation might be helpful:
 String Functions: https://docs.python.org/2.5/lib/string-methods.html
 CSV Reader/Writer: https://docs.python.org/3/library/csv.html
+
+## Download Pictures
