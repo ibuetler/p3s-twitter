@@ -139,4 +139,24 @@ def get_all_tweets(html):
   return tweets_dict
 ```
 
-### Step 2: Create a CSV File
+Next, we want to write our Dictionary into a CSV File. A CVS file can be created with the "with" Keyword. This Example illustrates this:
+
+```python
+ with open('tweets.csv', 'w') as csv_file:
+        writer = csv.writer(csv_file)
+
+```
+The "with" keywords creates the tweets.csv File in write mode if it does not exist. After a Writer Instance is created which provides member functions to manipulate the file.
+
+The writer Instance provides a helpful function which is called "writerow([Lits])". This Function will write the provided List in the parameter as a delimited string into the CSV File
+
+
+**Task** Create a Funtcion create_CSV_file(dict) which takes a dictionary as a parameter and converts it into a CSV File. For a better Layout replace in the dictionary for every value it contains the '\n' character by a whitespace. Then Loop over the dictionary and create a CVS file with the Format: Tweet-ID, Tweet
+
+Here is an example of an resulting Entry:
+
+1247139537580687360,"Ein kleiner Ausblick auf den nächsten #TechnologyOutlook im 2021: Was bleibt, was ändert sich, was wird besser: http://ow.ly/Znkt50z6gGN  #Innovationpic.twitter.com/tGFCCM0NeH"
+
+This 2 Documentation might be helpful:
+String Functions: https://docs.python.org/2.5/lib/string-methods.html
+CSV Reader/Writer: https://docs.python.org/3/library/csv.html
