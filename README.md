@@ -56,6 +56,23 @@ response = requests.get(url)
 
 Beautiful Soup is a Python library for getting data out of HTML, XML, and other markup languages. It is posible to pull particular content from a webpage, remove the HTML markup, and save the information. For our Task, this means we need to find the particular html tag which stores the information for each tweet.
 
+Firstly, from our instance of the request we want to receive the html structure. This can be achieved like this:
 
+```python
+from bs4 import BeautifulSoup
 
+html = BeautifulSoup(response.text, 'html.parser')
+```
+The whole html structure of our previous request is now saved in the html variable.
+
+The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. To save this time, we will provde the tag. In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
+
+This Code illustrates how to receive all tweets with beautiful soup:
+
+```container
+
+tweets = html.find_all("li", {"data-item-type": "tweet"})
+
+```
+¨
 
