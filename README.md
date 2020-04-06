@@ -81,15 +81,26 @@ Now we want to receive the actual content of the tweet. Every tweet is embedded 
 
  tweets = html.find_all("li", {"data-item-type": "tweet"})
     for tweet in tweets:
-        try:
-            tweet_text_box = tweet.find("p", {"class": "TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"})
-            tweet_text = tweet_text_box.text
-            tweet_id = tweet['data-item-id']
+           tweet_text_box = tweet.find("p", {"class": "TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"})
+           tweet_text = tweet_text_box.text
+           tweet_id = tweet['data-item-id']
 ```
 
-**Task:** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
+**Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
 
 As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
 
+The list of tweets is located in a div-container with the class "stream-container" and has an attribute "data-min-position". This attribute always holds de ID of the last Tweet of the current page. In our case with only one request it will hold the ID of the 20th tweet. It is also possible to specify in the URL from which tweet the history should be displayed.
 
+This snippet shows how the ID of the last tweet can be received and how this can be used to load the next 20 with the URL:
+
+```python
+    next_tweets = html.find("div", {"class": "stream-container"})["data-min-position"]
+    next_url = "https://twitter.com/i/profiles/show/" + 'SATW_ch' + \
+                "/timeline/tweets?include_available_features=1&" \
+                "include_entities=1&max_position=" + next_tweets + "&reset_error_state=false"
+```
+
+
+**Task:** Now write a function with the name get_all_tweets(html) This function takes an html instance of Beautiful Soup created. Call the function from the previous step to get the first 20 tweets. Then find the ID of the last tweet and adjust the URL to this ID. Now iterate until all tweets are loaded.
 
