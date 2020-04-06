@@ -88,6 +88,7 @@ Now we want to receive the actual content of the tweet. Every tweet is embedded 
 ```
 
 **Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
+
 **Skeleton:** you can use this Code Skeleton for your solution
 
 ```python
