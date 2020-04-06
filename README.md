@@ -20,7 +20,7 @@ This challenge is about creating a Web Crawler for Twitter with Python 3. You wi
 
 ## Preperation
 
-### Step1
+### Step 1
 
 We have a pipenv python3 skeleton for you. please run the following commands (e.g. Hacking-Lab LiveCD) and setup your python3 environment.
 
