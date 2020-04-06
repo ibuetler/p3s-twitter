@@ -69,10 +69,27 @@ The next step is to find the HTML tag that stores the information for the tweets
 
 This Code illustrates how to receive all tweets with beautiful soup:
 
-```container
+```python
 
 tweets = html.find_all("li", {"data-item-type": "tweet"})
 
 ```
 ¨
+Now we want to receive the actual content of the tweet. Every tweet is embedded in a p-Element which posses the following 4 Classes: TweetTextSize TweetTextSize--normal js-tweet-text tweet-text. Since the tweets variable contains a list of each tweet, we need to iterate over it to get the p element of each list entry. This illustrated by this snippet:
+
+```python
+
+ tweets = html.find_all("li", {"data-item-type": "tweet"})
+    for tweet in tweets:
+        try:
+            tweet_text_box = tweet.find("p", {"class": "TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"})
+            tweet_text = tweet_text_box.text
+            tweet_id = tweet['data-item-id']
+```
+
+**Task:** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
+
+As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
+
+
 
