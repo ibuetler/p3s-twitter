@@ -88,6 +88,26 @@ Now we want to receive the actual content of the tweet. Every tweet is embedded 
 ```
 
 **Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
+**Skeleton:** you can use this Code Skeleton for your solution
+
+```python
+from bs4 import BeautifulSoup
+import requests
+
+url = 'https://twitter.com/SATW_ch'
+response = requests.get(url)
+
+html = BeautifulSoup(response.text, 'html.parser')
+
+def get_this_page_tweets(html):
+   tweets_dict = {}
+   
+   # your code
+   
+   
+   return tweets_dict
+
+```
 
 As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
 
@@ -110,12 +130,12 @@ This snippet shows how the ID of the last tweet can be received and how this can
 ```python
 
 def get_all_tweets(html):
-    tweets_list = get_this_page_tweets(html)
+    tweets_dict = get_this_page_tweets(html)
     next_tweets = html.find("div", {"class": "stream-container"})["data-min-position"]
     
   #iterate over the URL until no more tweets are found
   
-  return tweets_list
+  return tweets_dict
 ```
 
 ### Step2 Create a CSV File
