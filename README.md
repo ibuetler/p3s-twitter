@@ -74,8 +74,9 @@ This Code illustrates how to receive all tweets with beautiful soup:
 tweets = html.find_all("li", {"data-item-type": "tweet"})
 
 ```
-¨
+
 Now we want to receive the actual content of the tweet. Every tweet is embedded in a p-Element which posses the following 4 Classes: TweetTextSize TweetTextSize--normal js-tweet-text tweet-text. Since the tweets variable contains a list of each tweet, we need to iterate over it to get the p element of each list entry. This illustrated by this snippet:
+
 
 ```python
 
@@ -104,3 +105,17 @@ This snippet shows how the ID of the last tweet can be received and how this can
 
 **Task:** Now write a function with the name get_all_tweets(html) This function takes an html instance of Beautiful Soup created. Call the function from the previous step to get the first 20 tweets. Then find the ID of the last tweet and adjust the URL to this ID. Now iterate until all tweets are loaded.
 
+***Skeleton*** for this Function:
+
+```python
+
+def get_all_tweets(html):
+    tweets_list = get_this_page_tweets(html)
+    next_tweets = html.find("div", {"class": "stream-container"})["data-min-position"]
+    
+  #iterate over the URL until no more tweets are found
+  
+  return tweets_list
+```
+
+### Step2 Create a CSV File
