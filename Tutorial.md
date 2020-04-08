@@ -167,3 +167,37 @@ String Functions: https://docs.python.org/2.5/lib/string-methods.html
 CSV Reader/Writer: https://docs.python.org/3/library/csv.html
 
 ## Download Pictures
+
+In this next step, the goal is to download all images that the user has ever posted. The account used for this task is again SATW_ch.
+
+### Theory downloading Pictures
+
+To download images, the library wget can be used. Using this library is very easy. After importing the library, the wget object offers a "download" function. This function takes 2 parameters: the first is the URL of the image and the second is the path where the image should be saved and under which name.
+
+Illustrated by this snippet:
+
+```python
+import wget
+
+wget.download(https://example.com/picture.jpg, 'pictures/pictureExample.jpg')
+
+```
+###  Finding URL of the pictures
+
+To find the URL of the images, we have to load the tweets again, as in the previous task. In each tweet, if there is an image, there is a "div" tag with the following classes: "AdaptiveMedia-photoContainer js-adaptive-photo". This div tag has an attribute "data-image-url", which contains the link from the image.
+
+The following Code shows how to receive the link with beautiful soup:
+
+```python
+ pic_div = tweet.find("div", {"class": "AdaptiveMedia-photoContainer js-adaptive-photo"})
+        if pic_div is not None:
+            url = pic_div['data-image-url']
+
+```
+
+**Task** Now write two functions as in the previous task. One function with the name and parameter "get_images_of_page(html)". This function returns a list with the URL's of the images from the current page. The other function is called "get_all_images(html)", which iterates through all tweets and always calls the function "get_images_of_page". (As a reminder a URL request only loads 20 tweets at a time). The function returns a list with all URL's for the images. Then write a third function named "download_images(picture_list)". This function receives the list and downloads all images. Create a new folder with the name "pictures". The images should have a continuous name, the first image has the name "picture1.jpg", the second one "picture2.jpg" and so on.
+
+**Hint:** In Python 3 two lists can be merged with the += operator. Example: 
+```python
+list1 += list2 #list 2 will be merged in list1
+```
