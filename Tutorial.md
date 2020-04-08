@@ -7,7 +7,7 @@
 
 ## Introduction 
 
-This challenge is about creating a Web Crawler for Twitter with Python 3. You will get the name of the Twitter Profil we will use. The Name is located in the Profile.txt File.
+This challenge is about creating a Web Crawler for Twitter with Python 3. This Crawler will search through the twitter website in an automated way and read all HTML-tags until our desired tag is found.
 
 
 ### Learn how to ...
