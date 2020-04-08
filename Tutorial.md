@@ -66,7 +66,7 @@ html = BeautifulSoup(response.text, 'html.parser')
 ```
 The whole html structure of our previous request is now saved in the html variable.
 
-The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. To save this time, we will provde the tag. In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
+The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. To save this time, we will provde the tag. In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
 This Code illustrates how to receive all tweets with beautiful soup:
 
@@ -113,7 +113,9 @@ def get_this_page_tweets(html):
 
 As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
 
-The list of tweets is located in a div-container with the class "stream-container" and has an attribute "data-min-position". This attribute always holds de ID of the last Tweet of the current page. In our case with only one request it will hold the ID of the 20th tweet. It is also possible to specify in the URL from which tweet the history should be displayed.
+The list of tweets is located in a div-container with the class "stream-container" and has an attribute "data-min-position". This attribute always holds de ID of the last Tweet of the current page. In our case with only one request it will hold the ID of the 20th tweet. 
+
+It is now possible to use this ID for manipulating our request. In a Twitter URL there is a parameter called "max_position". This parameter will define from which ID the next 20 tweets should be loaded.
 
 This snippet shows how the ID of the last tweet can be received and how this can be used to load the next 20 with the URL:
 
@@ -151,7 +153,7 @@ import csv
         writer = csv.writer(csv_file)
 
 ```
-The "with" keywords creates the tweets.csv File in write mode if it does not exist. After a Writer Instance is created which provides member functions to manipulate the file.
+The "with" keywords creates the tweets.csv File in write mode if it does not exist. After a Writer Instance is created it provides member functions to manipulate the file.
 
 The writer Instance provides a helpful function which is called "writerow([Lits])". This Function will write the provided List in the parameter as a delimited string into the CSV File
 
