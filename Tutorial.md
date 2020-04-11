@@ -1,6 +1,3 @@
-
- 
-
 # Tutorial Twitter Web Crawler with Python3 
 
 ## Introduction 
@@ -37,11 +34,11 @@ pipenv --python 3 shell
 ```
 you should now have your python3 environment ready for this exercise.
 
-## Task 1: Pull all tweets from the twitter user `SATW_ch`
+## Pull all tweets from the twitter user `SATW_ch`
 
 In this Task we want to receive all tweets a specific user has ever made and want to store them in a csv file. The Profile of SATW_ch will be used for this task.
 
-### Step 1: Receive all Tweets
+### Task 1: Receive all Tweets
 
 To get all the tweets, first some theory is necessary, which will be explained in the next steps.
 
@@ -205,3 +202,8 @@ The following Code shows how to receive the link with beautiful soup:
 ```python
 list1 += list2 #list 2 will be merged in list1
 ```
+
+## Task 3: Find the `likes` of the user
+
+* N/A
+
