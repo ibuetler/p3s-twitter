@@ -3,8 +3,6 @@
 
 # Tutorial Twitter Web Crawler with Python3 
 
-  
-
 ## Introduction 
 
 This challenge is about creating a Web Crawler for Twitter with Python 3. This Crawler will search through the twitter website in an automated way and read all HTML-tags until our desired tag is found.
@@ -13,10 +11,14 @@ This challenge is about creating a Web Crawler for Twitter with Python 3. This C
 ### Learn how to ...
 
 * Make Request to a web site
-
 * Read the HTML DOM-Tree with Beautiful Soup
-
 * Download Pictures in a automated way
+
+### Goal
+* Task 1: pull all tweets from the twitter user `SATW_ch`
+* Task 2: create a csv with all the tweets
+* Task 3: download all images that have been tweeted by this user
+* Task 4: find all `likes` of the user
 
 
 ## Preperation
@@ -29,13 +31,13 @@ We have a pipenv python3 skeleton for you. please run the following commands (e.
 mkdir -p /opt/git
 cd /opt/git
 git clone https://github.com/ibuetler/p3s-twitter.git
-cd /opt/git/twitter
+cd /opt/git/p3s-twitter
 pipenv --python 3 sync
 pipenv --python 3 shell
 ```
 you should now have your python3 environment ready for this exercise.
 
-## Receive all Tweets from a user
+## Task 1: Pull all tweets from the twitter user `SATW_ch`
 
 In this Task we want to receive all tweets a specific user has ever made and want to store them in a csv file. The Profile of SATW_ch will be used for this task.
 
@@ -47,7 +49,7 @@ To get all the tweets, first some theory is necessary, which will be explained i
 
 First of all, we need to make a web request to the Twitter user's profile and save an instance of it. In Python 3 we can use the Request library to solve this. This simple Code snippet illustrates this:
 ```Python
-
+import requests
 url = 'https://twitter.com/SATW_ch'
 response = requests.get(url)
 
@@ -142,7 +144,7 @@ def get_all_tweets(html):
   return tweets_dict
 ```
 
-### Step 2: Create CSV File
+### Task 2: Create CSV File
 
 Next, we want to write our Dictionary into a CSV File. A CVS file can be created with the "with" Keyword. This Example illustrates this:
 
@@ -168,7 +170,7 @@ This 2 Documentation might be helpful:
 String Functions: https://docs.python.org/2.5/lib/string-methods.html
 CSV Reader/Writer: https://docs.python.org/3/library/csv.html
 
-## Download Pictures
+## Task 3: Download Pictures
 
 In this next step, the goal is to download all images that the user has ever posted. The account used for this task is again SATW_ch.
 
