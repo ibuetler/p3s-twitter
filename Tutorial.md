@@ -1,15 +1,12 @@
 # Tutorial Twitter Web Crawler with Python3 
-
 ## Introduction 
-
-This challenge is about creating a Web Crawler for Twitter with Python 3. This Crawler will search through the twitter website in an automated way and read all HTML-tags until our desired tag is found.
+This python3 programming exercise is about creating a Web Crawler for Twitter with Python 3. The Crawler shall search through the twitter posts of a user in an automated way and read all HTML-tags until our desired tag is found.
 
 
 ### Learn how to ...
-
-* Make Request to a web site
+* Make web request to a web site
 * Read the HTML DOM-Tree with Beautiful Soup
-* Download Pictures in a automated way
+* Automatically downloading all pictures of the twitter user
 
 ### Goal
 * Task 1: pull all tweets from the twitter user `SATW_ch`
@@ -19,10 +16,8 @@ This challenge is about creating a Web Crawler for Twitter with Python 3. This C
 
 
 ## Preperation
-
 ### Step 1
-
-We have a pipenv python3 skeleton for you. please run the following commands (e.g. Hacking-Lab LiveCD) and setup your python3 environment.
+Please run the following commands (e.g. Hacking-Lab LiveCD) and setup your python3 environment.
 
 ```
 mkdir -p /opt/git
@@ -32,7 +27,8 @@ cd /opt/git/p3s-twitter
 pipenv --python 3 sync
 pipenv --python 3 shell
 ```
-you should now have your python3 environment ready for this exercise.
+
+
 
 ## Pull all tweets from the twitter user `SATW_ch`
 
@@ -45,15 +41,14 @@ To get all the tweets, first some theory is necessary, which will be explained i
 #### Theory about Requests
 
 First of all, we need to make a web request to the Twitter user's profile and save an instance of it. In Python 3 we can use the Request library to solve this. This simple Code snippet illustrates this:
+
 ```Python
 import requests
 url = 'https://twitter.com/SATW_ch'
 response = requests.get(url)
-
 ```
 
 #### Theory about Beautiful Soup
-
 Beautiful Soup is a Python library for getting data out of HTML, XML, and other markup languages. It is posible to pull particular content from a webpage, remove the HTML markup, and save the information. For our Task, this means we need to find the particular html tag which stores the information for each tweet.
 
 Firstly, from our instance of the request we want to receive the html structure. This can be achieved like this:
@@ -63,6 +58,7 @@ from bs4 import BeautifulSoup
 
 html = BeautifulSoup(response.text, 'html.parser')
 ```
+
 The whole html structure of our previous request is now saved in the html variable.
 
 The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. To save this time, we will provde the tag. In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
@@ -70,9 +66,7 @@ The next step is to find the HTML tag that stores the information for the tweets
 This Code illustrates how to receive all tweets with beautiful soup:
 
 ```python
-
 tweets = html.find_all("li", {"data-item-type": "tweet"})
-
 ```
 
 Now we want to receive the actual content of the tweet. Every tweet is embedded in a p-Element which posses the following 4 Classes: TweetTextSize TweetTextSize--normal js-tweet-text tweet-text. Since the tweets variable contains a list of each tweet, we need to iterate over it to get the p element of each list entry. This illustrated by this snippet:
@@ -80,11 +74,11 @@ Now we want to receive the actual content of the tweet. Every tweet is embedded 
 
 ```python
 
- tweets = html.find_all("li", {"data-item-type": "tweet"})
-    for tweet in tweets:
-           tweet_text_box = tweet.find("p", {"class": "TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"})
-           tweet_text = tweet_text_box.text
-           tweet_id = tweet['data-item-id']
+tweets = html.find_all("li", {"data-item-type": "tweet"})
+  for tweet in tweets:
+        tweet_text_box = tweet.find("p", {"class": "TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"})
+        tweet_text = tweet_text_box.text
+        tweet_id = tweet['data-item-id']
 ```
 
 **Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
