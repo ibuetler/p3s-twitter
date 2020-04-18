@@ -83,7 +83,10 @@ tweets = html.find_all("li", {"data-item-type": "tweet"})
 
 **Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
 
-**Skeleton:** you can use this Code Skeleton for your solution
+If you want some additional help, below is skeleton which you can use:
+
+<details><Skeleton>Pattern</summary>
+<p>
 
 ```python
 from bs4 import BeautifulSoup
@@ -104,6 +107,10 @@ def get_this_page_tweets(html):
 
 ```
 
+</p>
+</details>
+
+
 As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
 
 The list of tweets is located in a div-container with the class "stream-container" and has an attribute "data-min-position". This attribute always holds de ID of the last Tweet of the current page. In our case with only one request it will hold the ID of the 20th tweet. 
@@ -122,7 +129,10 @@ This snippet shows how the ID of the last tweet can be received and how this can
 
 **Task:** Now write a function with the name get_all_tweets(html) This function takes an html instance of Beautiful Soup created. Call the function from the previous step to get the first 20 tweets. Then find the ID of the last tweet and adjust the URL to this ID. Now iterate until all tweets are loaded.
 
-***Skeleton*** for this Function:
+If you want some additional help, belows is a skeleton of the get_all_tweets function.
+
+<details><Skeleton>Pattern</summary>
+<p>
 
 ```python
 
@@ -134,6 +144,10 @@ def get_all_tweets(html):
   
   return tweets_dict
 ```
+
+</p>
+</details>
+
 
 ### Task 2: Create CSV File
 
@@ -196,8 +210,4 @@ The following Code shows how to receive the link with beautiful soup:
 ```python
 list1 += list2 #list 2 will be merged in list1
 ```
-
-## Task 3: Find the `likes` of the user
-
-* N/A
 
