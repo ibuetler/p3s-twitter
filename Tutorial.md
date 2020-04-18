@@ -18,7 +18,6 @@ This python3 programming exercise is about creating a Web Crawler for Twitter wi
 * Task 3: download all images that have been tweeted by this user
 
 
-
 ## Preperation
 ### Step 1
 Please run the following commands (e.g. Hacking-Lab LiveCD) and setup your python3 environment.
@@ -31,8 +30,6 @@ cd /opt/git/p3s-twitter
 pipenv --python 3 sync
 pipenv --python 3 shell
 ```
-
-
 
 ## Pull all tweets from the twitter user `SATW_ch`
 
@@ -69,6 +66,12 @@ The whole html structure of our previous request is now saved in the html variab
 The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. You can try this on your own if you want, otherwise below is the tag provided and how to extract it.
  Open the Google Chrome browser and go to https://twitter.com/SATW_ch. Navigate to View -> Developer -> Developer -> Developer Tools. You should now see the following:
  
+ ![screenshot](/media/challenge/png/Screenshot_developer_tools.png)
+ 
+ Now try to find the corresponding tag that contains all tweets as a small hint all tweets are kept in a list.
+ 
+ <details><summary>Click for the Tags</summary>
+<p>
 
 In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
@@ -77,6 +80,9 @@ This Code illustrates how to receive all tweets with beautiful soup:
 ```python
 tweets = html.find_all("li", {"data-item-type": "tweet"})
 ```
+
+</p>
+</details>
 
 Now we want to receive the actual content of the tweet. Every tweet is embedded in a p-Element which posses the following 4 Classes: TweetTextSize TweetTextSize--normal js-tweet-text tweet-text. Since the tweets variable contains a list of each tweet, we need to iterate over it to get the p element of each list entry. This illustrated by this snippet:
 
@@ -90,7 +96,39 @@ tweets = html.find_all("li", {"data-item-type": "tweet"})
         tweet_id = tweet['data-item-id']
 ```
 
+The find_all Method is provided by beautiful soup. The Method goes through the whole provided DOM-structure and searches for the tag given in the parameter. Find_all is used when the tag is not unique and can have multiple occurences. Therefore, a list is returned. On the other hand, find is used when the tag is unique and only one can occure. 
+
+
+Additionally not only the text should be extracted, but also the date of the tweet and all its Hashtags. For a better usage later for our CSV file and JSON file a dictionary should be used which has the ID of the tweet as the key and a string as the value. The string is composed of date, tweet content, hashtags. Here an Example of how the String should look like:
+
+```
+Date: 03:10 - 16. Apr. 2020,Tweet-text: .@Leopoldina hat eine dritte Ad-hoc-Stellungnahme zur COVID19-Pandemie veröffentlicht. Das Papier behandelt behandelt die psychologischen, sozialen, rechtlichen, pädagogischen und wirtschaftlichen Aspekte,Tags: #COVID19 #Pandemie
+```
+The string "Date:" should be added before the date. After the date a comma and then before the Tweet content the string Tweet-text: closed with a comma. Before the hashtags the string "Tags:" is to be added.
+
+**Extracting the date**
+
+The date of each tweet can be found in a link tag (<a>). The tags have the following classes: "tweet-timestamp js-permalink js-nav js-tooltip". The data can then be read using the title attribute. The following code shows this:
+ 
+```python
+tweets = html.find_all('li', {'data-item-type': 'tweet'})
+date_box = tweet.find('a', {'class': 'tweet-timestamp js-permalink js-nav js-tooltip'})
+date = date_box['title']
+```
+**Extracting the tags of the tweet**
+
+The hashtags of a tweet are again stored in a link tag. Each tag has the following classes: 'twitter-hashtag pretty-link js-nav'. Please note that a tweet can have several tags. So you must not use the find method of beautiful soup, instead the find_all method must be used. 
+
+This is illustrated here:
+
+```python
+tweets = html.find_all('li', {'data-item-type': 'tweet'})
+hash_tags = tweet.find_all('a', {'class':'twitter-hashtag pretty-link js-nav'})
+```
+
+
 **Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the tweet content as value.
+
 
 If you want some additional help, below is skeleton which you can use:
 
