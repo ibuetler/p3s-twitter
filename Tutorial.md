@@ -85,7 +85,7 @@ tweets = html.find_all("li", {"data-item-type": "tweet"})
 
 If you want some additional help, below is skeleton which you can use:
 
-<details><Skeleton>Pattern</summary>
+<details><summary>Skeleton</summary>
 <p>
 
 ```python
@@ -131,7 +131,7 @@ This snippet shows how the ID of the last tweet can be received and how this can
 
 If you want some additional help, belows is a skeleton of the get_all_tweets function.
 
-<details><Skeleton>Pattern</summary>
+<details><summary>Skeleton</summary>
 <p>
 
 ```python
