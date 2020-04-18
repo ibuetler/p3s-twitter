@@ -7,12 +7,16 @@ This python3 programming exercise is about creating a Web Crawler for Twitter wi
 * Make web request to a web site
 * Read the HTML DOM-Tree with Beautiful Soup
 * Automatically downloading all pictures of the twitter user
+* create a CSV file
+* create a JSON file and read a JSON file
 
 ### Goal
 * Task 1: pull all tweets from the twitter user `SATW_ch`
-* Task 2: create a csv with all the tweets
+* Task 2a: create a csv with all the tweets
+* Task 2b: create a JSON file with all the tweets
+* Task 2c: read the JSON file and search for specific keywords
 * Task 3: download all images that have been tweeted by this user
-* Task 4: find all `likes` of the user
+
 
 
 ## Preperation
@@ -40,7 +44,7 @@ To get all the tweets, first some theory is necessary, which will be explained i
 
 #### Theory about Requests
 
-First of all, we need to make a web request to the Twitter user's profile and save an instance of it. In Python 3 we can use the Request library to solve this. This simple Code snippet illustrates this:
+First of all, we need to make a web request to the Twitter user's profile and save an instance of it. In Python 3 we can use the Request library to solve this. The request object has an function get which takes an URL as a parameter and makes a request to the given URL. This simple Code snippet illustrates this:
 
 ```Python
 import requests
@@ -49,6 +53,7 @@ response = requests.get(url)
 ```
 
 #### Theory about Beautiful Soup
+
 Beautiful Soup is a Python library for getting data out of HTML, XML, and other markup languages. It is posible to pull particular content from a webpage, remove the HTML markup, and save the information. For our Task, this means we need to find the particular html tag which stores the information for each tweet.
 
 Firstly, from our instance of the request we want to receive the html structure. This can be achieved like this:
@@ -61,7 +66,11 @@ html = BeautifulSoup(response.text, 'html.parser')
 
 The whole html structure of our previous request is now saved in the html variable.
 
-The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. To save this time, we will provde the tag. In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
+The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. You can try this on your own if you want, otherwise below is the tag provided and how to extract it.
+ Open the Google Chrome browser and go to https://twitter.com/SATW_ch. Navigate to View -> Developer -> Developer -> Developer Tools. You should now see the following:
+ 
+
+In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
 This Code illustrates how to receive all tweets with beautiful soup:
 
