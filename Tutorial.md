@@ -111,7 +111,7 @@ The string "Date:" should be added before the date. After the date a comma and t
 
 **Extracting the date**
 
-The date of each tweet can be found in a link tag (<a>). The tags have the following classes: "tweet-timestamp js-permalink js-nav js-tooltip". The data can then be read using the title attribute. The following code shows this:
+The date of each tweet can be found in a link tag (a). The tags have the following classes: "tweet-timestamp js-permalink js-nav js-tooltip". The data can then be read using the title attribute. The following code shows this:
  
 ```python
 tweets = html.find_all('li', {'data-item-type': 'tweet'})
@@ -128,7 +128,7 @@ This is illustrated here:
 tweets = html.find_all('li', {'data-item-type': 'tweet'})
 hash_tags = tweet.find_all('a', {'class':'twitter-hashtag pretty-link js-nav'})
 ```
-The content of the tag is then contained in a '<b>' tag. This content should be added to a list in form of a string with a Hash Tag character added. For this we have to iterate over the found hash tags as follows:
+The content of the tag is then contained in a 'b' tag. This content should be added to a list in form of a string with a Hash Tag character added. For this we have to iterate over the found hash tags as follows:
 
 ```python
  hash_tags = tweet.find_all('a', {'class':'twitter-hashtag pretty-link js-nav'})
