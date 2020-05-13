@@ -128,7 +128,7 @@ This is illustrated here:
 tweets = html.find_all('li', {'data-item-type': 'tweet'})
 hash_tags = tweet.find_all('a', {'class':'twitter-hashtag pretty-link js-nav'})
 ```
-The content of the tag is then contained in a <b> tag. This content should be added to a list in form of a string with a Hash Tag character added. For this we have to iterate over the found hash tags as follows:
+The content of the tag is then contained in a '<b>' tag. This content should be added to a list in form of a string with a Hash Tag character added. For this we have to iterate over the found hash tags as follows:
 
 ```python
  hash_tags = tweet.find_all('a', {'class':'twitter-hashtag pretty-link js-nav'})
