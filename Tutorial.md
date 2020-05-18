@@ -4,7 +4,7 @@ This python3 programming exercise is about creating a Web Crawler for Twitter wi
 
 
 ### Learn how to ...
-* Make web request to a web site
+* Make a web request to a web site
 * Read the HTML DOM-Tree with Beautiful Soup
 * Automatically downloading all pictures of the twitter user
 * create a CSV file
@@ -12,15 +12,15 @@ This python3 programming exercise is about creating a Web Crawler for Twitter wi
 
 ### Goal
 * Task 1: pull all tweets from the twitter user `SATW_ch`
-* Task 2a: create a csv with all the tweets
+* Task 2a: create a CSV with all the tweets
 * Task 2b: create a JSON file with all the tweets
 * Task 2c: read the JSON file and search for specific keywords
 * Task 3: download all images that have been tweeted by this user
 
 
-## Preperation
+## Preparation
 ### Step 1
-Please run the following commands (e.g. Hacking-Lab LiveCD) and setup your python3 environment.
+Please run the following commands (e.g. Hacking-Lab LiveCD) and set up your python3 environment.
 
 ```
 mkdir -p /opt/git
@@ -33,15 +33,15 @@ pipenv --python 3 shell
 
 ## Pull all tweets from the twitter user `SATW_ch`
 
-In this Task we want to receive all tweets a specific user has ever made and want to store them in a csv file. The Profile of SATW_ch will be used for this task.
+In this Task, we want to receive all tweets a specific user has ever made and want to store them in a CSV file. The Profile of SATW_ch will be used for this task.
 
 ### Task 1: Receive all Tweets
 
-To get all the tweets, first some theory is necessary, which will be explained in the next steps.
+To get all the tweets, some theory is necessary, which will be explained in the next steps.
 
 #### Theory about Requests
 
-First of all, we need to make a web request to the Twitter user's profile and save an instance of it. In Python 3 we can use the Request library to solve this. The request object has an function 'get' which takes an URL as a parameter and makes a request to the given URL. This simple Code snippet illustrates this:
+First of all, we need to make a web request to the Twitter user's profile and save an instance of it. In Python 3 we can use the Request library to solve this. The request object has a function 'get' which takes an URL as a parameter and makes a request to the given URL. This simple code snippet illustrates this:
 
 ```Python
 import requests
@@ -51,9 +51,9 @@ response = requests.get(url)
 
 #### Theory about Beautiful Soup
 
-Beautiful Soup is a Python library for getting data out of HTML, XML, and other markup languages. It is posible to pull particular content from a webpage, remove the HTML markup, and save the information. For our Task, this means we need to find the particular html tag which stores the information for each tweet.
+Beautiful Soup is a Python library for getting data out of HTML, XML, and other markup languages. It is possible to pull particular content from a webpage, remove the HTML markup, and save the information. For our Task, this means we need to find the particular HTML tag which stores the information for each tweet.
 
-Firstly, from our instance of the request we want to receive the html structure. This can be achieved like this:
+Firstly, from our instance of the request we want to receive the HTML structure. This can be achieved like this:
 
 ```python
 from bs4 import BeautifulSoup
@@ -61,7 +61,7 @@ from bs4 import BeautifulSoup
 html = BeautifulSoup(response.text, 'html.parser')
 ```
 
-The whole html structure of our previous request is now saved in the html variable.
+The whole HTML structure of our previous request is now saved in the HTML variable.
 
 The next step is to find the HTML tag that stores the information for the tweets. It is possible to view the HTML structure of the websites in the browser developer tools and go through the whole site until the desired Tag is found. You can try this on your own if you want, otherwise below is the tag provided and how to extract it.
 
@@ -69,14 +69,14 @@ Open the Google Chrome browser and go to https://twitter.com/SATW_ch. Navigate t
  
  ![screenshot](/media/challenge/png/Screenshot_developer_tools.png)
  
-As an alternative you could also print the html variable from the above snippet to the console. But this will be very unstructered and hard to read.
+As an alternative, you could also print the HTML variable from the above snippet to the console. But this will be very unstructured and hard to read.
  
  Now try to find the corresponding tag that contains all tweets as a small hint all tweets are kept in a list.
  
  <details><summary>Click for Solution</summary>
 <p>
 
-In Twitter all tweets are contained in a div-elment that has the class "stream-container". In this container the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
+In Twitter, all tweets are contained in a div-element that has the class "stream-container". In this container, the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
 This Code illustrates how to receive all tweets with beautiful soup:
 
@@ -99,13 +99,13 @@ tweets = html.find_all("li", {"data-item-type": "tweet"})
         tweet_id = tweet['data-item-id']
 ```
 
-The find_all Method is provided by beautiful soup. The Method goes through the whole provided DOM-structure and searches for the tag given in the parameter. Find_all is used when the tag is not unique and can have multiple occurences. Therefore, a list is returned. On the other hand, find is used when the tag is unique and only one can occure. 
+The find_all Method is provided by beautiful soup. The method goes through the whole provided DOM-structure and searches for the tag given in the parameter. Find_all is used when the tag is not unique and can have multiple occurrences. Therefore, a list is returned. On the other hand, find is used when the tag is unique and only one can occur. 
 
 
-Additionally not only the text should be extracted, but also the date of the tweet and all its Hashtags. For a better usage later for our CSV file and JSON file a dictionary should be used which has the ID of the tweet as the key and a string as the value. The string is composed of date, tweet content, hashtags. Here an Example of how the String should look like:
+Additionally, not only the text should be extracted, but also the date of the tweet and all its Hashtags. For a better usage later for our CSV file and JSON file a dictionary should be used which has the ID of the tweet as the key and a string as the value. The string is composed of date, tweet content, hashtags. Here an example of how the String should look like:
 
 ```
-Date: 03:10 - 16. Apr. 2020,Tweet-text: .@Leopoldina hat eine dritte Ad-hoc-Stellungnahme zur COVID19-Pandemie veröffentlicht. Das Papier behandelt behandelt die psychologischen, sozialen, rechtlichen, pädagogischen und wirtschaftlichen Aspekte,Tags: #COVID19 #Pandemie
+Date: 03:10 - 16. Apr. 2020,Tweet-text: .@Leopoldina hat Eine dritte Ad-hoc-Stellungnahme zur COVID19-Pandemie veröffentlicht. Das Papier behandelt behandelt die psychologischen, sozialen, rechtlichen, pädagogischen und wirtschaftlichen Aspekte,Tags: #COVID19 #Pandemie
 ```
 The string "Date:" should be added before the date. After the date a comma and then before the Tweet content the string Tweet-text: closed with a comma. Before the hashtags the string "Tags:" is to be added.
 
@@ -139,7 +139,7 @@ The content of the tag is then contained in a 'b' tag. This content should be ad
    tag_list.append(tag_string)
 ```
 
-**Task::** With this knowledge, write a function named get_this_page_tweets(html), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the vlaue is a string composed of date,content,tags of the tweet.
+**Task::** With this knowledge, write a function named get_this_page_tweets(HTML), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the value is a string composed of date, content, tags of the tweet.
 
 If you want some additional help, below is skeleton which you can use:
 
@@ -171,9 +171,9 @@ def get_this_page_tweets(html):
 
 As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
 
-The list of tweets is located in a div-container with the class "stream-container" and has an attribute "data-min-position". This attribute always holds de ID of the last Tweet of the current page. In our case with only one request it will hold the ID of the 20th tweet. 
+The list of tweets is located in a div-container with the class "stream-container" and has an attribute "data-min-position". This attribute always holds de ID of the last Tweet of the current page. In our case with only one request, it will hold the ID of the 20th tweet. 
 
-It is now possible to use this ID for manipulating our request. In a Twitter URL there is a parameter called "max_position". This parameter will define from which ID the next 20 tweets should be loaded.
+It is now possible to use this ID for manipulating our request. In a Twitter URL, there is a parameter called "max_position". This parameter will define from which ID the next 20 tweets should be loaded.
 
 This snippet shows how the ID of the last tweet can be received and how this can be used to load the next 20 with the URL:
 
@@ -185,9 +185,9 @@ This snippet shows how the ID of the last tweet can be received and how this can
 ```
 
 
-**Task:** Now write a function with the name get_all_tweets(html) This function takes an html instance of Beautiful Soup created. Call the function from the previous step to get the first 20 tweets. Then find the ID of the last tweet and adjust the URL to this ID. Now iterate until all tweets are loaded.
+**Task:** Now write a function with the name get_all_tweets(HTML) This function takes an HTML instance of Beautiful Soup created. Call the function from the previous step to get the first 20 tweets. Then find the ID of the last tweet and adjust the URL to this ID. Now iterate until all tweets are loaded.
 
-If you want some additional help, belows is a skeleton of the get_all_tweets function.
+If you want some additional help, below is a skeleton of the get_all_tweets function.
 
 <details><summary>Skeleton</summary>
 <p>
@@ -220,10 +220,10 @@ import csv
 ```
 The "with" keywords creates the tweets.csv File in write mode if it does not exist. After a Writer Instance is created it provides member functions to manipulate the file.
 
-The writer Instance provides a helpful function which is called "writerow([Lits])". This Function will write the provided List in the parameter as a delimited string into the CSV File. It also takes as in our case a dictionary as a parameter and will directly write from the dictionary in a CSV format.
+The writer Instance provides a helper function which is called "writerow([Lits])". This Function will write the provided List in the parameter as a delimited string into the CSV File. It also takes as in our case a dictionary as a parameter and will directly write from the dictionary in a CSV format.
 
 
-**Task** Create a Funtcion create_CSV_file(dict) which takes a dictionary as a parameter and converts it into a CSV File. The dictionary passed is the format which the above functions created. For a better Layout replace in the dictionary for every value it contains the '\n' character by a whitespace. Then Loop over the dictionary and create a CVS file with the Format: Tweet-ID, Tweet
+**Task** Create a function "create_CSV_file(dict)" which takes a dictionary as a parameter and converts it into a CSV File. The dictionary passed is the format which the above functions created. For a better Layout replace in the dictionary for every value it contains the '\n' character by a whitespace. Then Loop over the dictionary and create a CVS file with the Format: Tweet-ID, Tweet
 
 Here is an example of an resulting Entry:
 
@@ -236,7 +236,7 @@ CSV Reader/Writer: https://docs.python.org/3/library/csv.html
 
 ## Task 2b create a JSON file
 
-In this task we want to display our tweets not only as CSV format but also as JSON format. JSON offers the advantage that it can be easily queried to get specific information. We will do this in the next task.
+In this task, we want to display our tweets not only as CSV format but also as JSON format. JSON offers the advantage that it can be easily queried to get specific information. We will do this in the next task.
 
 Python provides a library called json to read and write JSON files. A dictionary can be easily converted to JSON format. You create a dictionary that contains a list of JSON objects. Here is an example how to create a JSON object for the tweets in our case:
 
@@ -251,7 +251,7 @@ Python provides a library called json to read and write JSON files. A dictionary
         })
 ```
 
-This dictionary can then be easily converted to a JSON file using the JSON library. The file can be created again with the "with" keyword and inside the json.dump function is called. This function takes a dictionary and an output file as parameters. This dictionary is then written to the file in Json format. Here is an illustration:
+This dictionary can then be easily converted to a JSON file using the JSON library. The file can be created again with the "with" keyword and inside the json.dump function is called. This function takes a dictionary and an output file as parameters. This dictionary is then written to the file in JSON format. Here is an illustration:
 
 ```python
   with open('tweets.json', 'w') as output:
@@ -262,16 +262,16 @@ This dictionary can then be easily converted to a JSON file using the JSON libra
 
 ## Task 2c: Read the JSON file and extract information
 
-In this task we want to write a method that takes a string as parameter and searches our Json file for it. To be more precise, hash tags are passed in the form of a string and our method should then retrieve all Json objects (tweets) that contain this hash tag.
+In this task, we want to write a method that takes a string as parameter and searches our JSON file for it. To be more precise, hashtags are passed in the form of a string and our method should then retrieve all JSON objects (tweets) that contain this hashtag.
 
-To read a JSON file, the "with" keyword can be used in combination with the json.load function from the json library. This function returns a dictionary with the same structure as the one we created in the previous task.  
+To read a JSON file, the "with" keyword can be used in combination with the JSON.load function from the JSON library. This function returns a dictionary with the same structure as the one we created in the previous task.  
 
 ```python
     with open ('tweets.json', 'r') as input:
         data = json.load(input)
 ```
 
-**Task** Now write a function named find_tweets_by_tag which takes a string as parameter and returns a list with all tweets containing this string as hash tag.
+**Task** Now write a function named find_tweets_by_tag which takes a string as parameter and returns a list with all tweets containing this string as a hashtag.
 
 ## Task 3: Download Pictures
 
