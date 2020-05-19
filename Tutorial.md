@@ -67,7 +67,7 @@ The next step is to find the HTML tag that stores the information for the tweets
 
 Open the Google Chrome browser and go to https://twitter.com/SATW_ch. Navigate to View -> Developer -> Developer -> Developer Tools. You should now see the following:
  
- ![screenshot](/media/challenge/png/Screenshot_developer_tools.png)
+ ![screenshot](/media/challenge/png/b301b694-9c03-4039-b600-53f9b05453c9.png)
  
 As an alternative, you could also print the HTML variable from the above snippet to the console. But this will be very unstructured and hard to read.
  
