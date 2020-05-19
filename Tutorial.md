@@ -138,7 +138,7 @@ The content of the tag is then contained in a 'b' tag. This content should be ad
    tag_list.append(tag_string)
 ```
 
-**Task::** With this knowledge, write a function named get_this_page_tweets(HTML), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the value is a string composed of date, content, tags of the tweet.
+**Task:** With this knowledge, write a function named get_this_page_tweets(HTML), this function takes a Beautiful Soup HTML instance and returns a dictionary with the tweet ID as key and the value is a string composed of date, content, tags of the tweet.
 
 If you want some additional help, below is skeleton which you can use:
 
