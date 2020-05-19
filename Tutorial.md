@@ -73,8 +73,8 @@ As an alternative, you could also print the HTML variable from the above snippet
  
  Now try to find the corresponding tag that contains all tweets as a small hint all tweets are kept in a list.
  
- <details><summary>Click for Solution</summary>
-<p>
+
+Solution:
 
 In Twitter, all tweets are contained in a div-element that has the class "stream-container". In this container, the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
@@ -83,9 +83,6 @@ This Code illustrates how to receive all tweets with beautiful soup:
 ```python
 tweets = html.find_all("li", {"data-item-type": "tweet"})
 ```
-
-</p>
-</details>
 
 Now we want to receive the actual content of the tweet. Every tweet is embedded in a p-Element which posses the following 4 Classes: TweetTextSize TweetTextSize--normal js-tweet-text tweet-text. Since the tweets variable contains a list of each tweet, we need to iterate over it to get the p element of each list entry. This illustrated by this snippet:
 
@@ -143,8 +140,8 @@ The content of the tag is then contained in a 'b' tag. This content should be ad
 
 If you want some additional help, below is skeleton which you can use:
 
-<details><summary>Skeleton</summary>
-<p>
+
+Skeleton:
 
 ```python
 from bs4 import BeautifulSoup
@@ -164,10 +161,6 @@ def get_this_page_tweets(html):
    return tweets_dict
 
 ```
-
-</p>
-</details>
-
 
 As you will notice your solution will only contain the recent 20 tweets. This is because the tweets are in a scrollbar and only loaded when you scroll down. The request does not do this for us and therefore only contains the first 20 tweets.
 
@@ -189,8 +182,8 @@ This snippet shows how the ID of the last tweet can be received and how this can
 
 If you want some additional help, below is a skeleton of the get_all_tweets function.
 
-<details><summary>Skeleton</summary>
-<p>
+
+Skeleton:
 
 ```python
 
@@ -203,8 +196,6 @@ def get_all_tweets(html):
   return tweets_dict
 ```
 
-</p>
-</details>
 
 
 ### Task 2a: Create CSV File
