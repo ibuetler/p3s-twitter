@@ -75,6 +75,7 @@ As an alternative, you could also print the HTML variable from the above snippet
  
 
 Solution:
+----------
 
 In Twitter, all tweets are contained in a div-element that has the class "stream-container". In this container, the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
@@ -83,6 +84,7 @@ This Code illustrates how to receive all tweets with beautiful soup:
 ```python
 tweets = html.find_all("li", {"data-item-type": "tweet"})
 ```
+------------
 
 Now we want to receive the actual content of the tweet. Every tweet is embedded in a p-Element which posses the following 4 Classes: TweetTextSize TweetTextSize--normal js-tweet-text tweet-text. Since the tweets variable contains a list of each tweet, we need to iterate over it to get the p element of each list entry. This illustrated by this snippet:
 
