@@ -73,9 +73,9 @@ As an alternative, you could also print the HTML variable from the above snippet
  
  Now try to find the corresponding tag that contains all tweets as a small hint all tweets are kept in a list.
  
-
+-----------
 Solution:
-----------
+
 
 In Twitter, all tweets are contained in a div-element that has the class "stream-container". In this container, the tweets are embedded as a list. Every tweet is a List-element (li HTML-Tag) with the the following data attribute "data-item-typ = tweet".
 
